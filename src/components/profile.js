@@ -8,7 +8,8 @@ import { request, gql } from "graphql-request";
 import styled from "styled-components";
 import moment from "moment";
 
-const query = gql`
+// GraphQL Query for All Events
+const sampleEventsQuery = gql`
   {
     sampleEvents {
       id
@@ -30,13 +31,14 @@ const query = gql`
 `;
 
 const Profile = () => {
+  // Context to Handle Auth Flow (Logout)
   const { user, logout } = useContext(UserContext);
 
+  // Make GraphQL Query and store in state
   const [apiResponse, setApiResponse] = useState(null);
-
   useEffect(() => {
-    request("https://api.hackthenorth.com/v3/graphql", query).then((data) =>
-      setApiResponse(data.sampleEvents)
+    request("https://api.hackthenorth.com/v3/graphql", sampleEventsQuery).then(
+      (data) => setApiResponse(data.sampleEvents)
     );
   }, []);
 
@@ -65,6 +67,7 @@ const Profile = () => {
 
 export default Profile;
 
+// Custom Styled components
 const Wrapper = styled.div`
   max-width: 100vw;
   display: flex;
