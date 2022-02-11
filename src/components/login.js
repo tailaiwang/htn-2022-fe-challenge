@@ -67,11 +67,12 @@ export default Login;
 
 // Custom Styled components
 const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
+  max-width: 100vw;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   background: linear-gradient(rgb(200, 217, 235) 0%, rgb(241, 244, 249) 60.28%);
 `;
 const Form = styled.form`
