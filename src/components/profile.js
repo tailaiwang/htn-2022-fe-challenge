@@ -4,31 +4,11 @@
 
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../contexts/userContext";
-import { request, gql } from "graphql-request";
-import styled from "styled-components";
+import { request } from "graphql-request";
+import { sampleEventsQuery } from "../utils/queries";
 import moment from "moment";
-
-// GraphQL Query for All Events
-const sampleEventsQuery = gql`
-  {
-    sampleEvents {
-      id
-      name
-      event_type
-      permission
-      start_time
-      end_time
-      description
-      speakers {
-        name
-        profile_pic
-      }
-      public_url
-      private_url
-      related_events
-    }
-  }
-`;
+import styled from "styled-components";
+import { Audio } from "react-loader-spinner";
 
 const Profile = () => {
   // Context to Handle Auth Flow (Logout)
@@ -36,30 +16,74 @@ const Profile = () => {
 
   // Make GraphQL Query and store in state
   const [apiResponse, setApiResponse] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     request("https://api.hackthenorth.com/v3/graphql", sampleEventsQuery).then(
       (data) => setApiResponse(data.sampleEvents)
     );
+    setTimeout(() => setLoading(false), 1000);
   }, []);
+
+  // Sort Events by Start Time
+  const onStartSort = (e) => {
+    e.preventDefault();
+    let sortedAsceding = apiResponse.sort((a, b) => {
+      return a.start_time - b.start_time;
+    });
+    setApiResponse([...sortedAsceding]);
+    setLoading(true);
+    setTimeout(() => setLoading(false), 1000);
+  };
+
+  // Sort Events by ID
+  const onIdSort = (e) => {
+    e.preventDefault();
+    let sortedAsceding = apiResponse.sort((a, b) => {
+      return a.id - b.id;
+    });
+    setApiResponse([...sortedAsceding]);
+    setLoading(true);
+    setTimeout(() => setLoading(false), 1000);
+  };
 
   return (
     <Wrapper>
       <h1>Welcome {user.username}!</h1>
       <Button onClick={logout}>Logout</Button>
+      <span>
+        <Button onClick={onStartSort}>Sort by Start Time</Button>
+        <Button onClick={onIdSort}>Sort by ID</Button>
+      </span>
+
       <div>
-        {apiResponse &&
-          apiResponse.map((item, index) => {
-            return (
-              <Card key={index}>
-                <h1>{item.name}</h1>
-                <p>
-                  {moment(item.start_time).format("dddd, h:mma")} to{" "}
-                  {moment(item.end_time).format("h:mma")}
-                </p>
-                <p>{item.description}</p>
-              </Card>
-            );
-          })}
+        {loading === false ? (
+          <div>
+            {apiResponse &&
+              apiResponse.map((item, index) => {
+                return (
+                  <Card key={index}>
+                    <h1>{item.name}</h1>
+                    <p>
+                      {moment(item.start_time).format("dddd, h:mma")} to{" "}
+                      {moment(item.end_time).format("h:mma")}
+                    </p>
+                    <p>{item.description}</p>
+                  </Card>
+                );
+              })}
+          </div>
+        ) : (
+          <LoadingWrapper>
+            <Audio
+              background="none"
+              height="100"
+              width="100"
+              color="grey"
+              ariaLabel="loading"
+            />
+          </LoadingWrapper>
+        )}
       </div>
     </Wrapper>
   );
@@ -68,7 +92,12 @@ const Profile = () => {
 export default Profile;
 
 // Custom Styled components
+const LoadingWrapper = styled.div`
+  height: 100%;
+`;
+
 const Wrapper = styled.div`
+  min-height: 100vh;
   max-width: 100vw;
   display: flex;
   align-items: center;
