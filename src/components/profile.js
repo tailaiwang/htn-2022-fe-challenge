@@ -42,10 +42,31 @@ const Profile = () => {
     );
   }, []);
 
+  const onStartSort = (e) => {
+    e.preventDefault();
+    let sortedAsceding = apiResponse.sort((a, b) => {
+      return a.start_time - b.start_time;
+    });
+    setApiResponse([...sortedAsceding])
+  };
+
+  const onIdSort = (e) => {
+    e.preventDefault();
+    let sortedAsceding = apiResponse.sort((a, b) => {
+      return a.id - b.id;
+    });
+    setApiResponse([...sortedAsceding])
+  };
+
   return (
     <Wrapper>
       <h1>Welcome {user.username}!</h1>
       <Button onClick={logout}>Logout</Button>
+      <span>
+        <Button onClick={onStartSort}>Sort by Start Time</Button>
+        <Button onClick={onIdSort}>Sort by ID</Button>
+      </span>
+      
       <div>
         {apiResponse &&
           apiResponse.map((item, index) => {
