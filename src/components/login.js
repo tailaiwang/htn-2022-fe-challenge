@@ -1,13 +1,19 @@
+// Hack the North 2022 Frontend Developer Challenge 
+// Tailai Wang
+// Login Page 
+
 import React, { useState, useContext } from "react";
 import UserContext from "../contexts/userContext";
 import styled from "styled-components";
 
 const Login = () => {
+  // Context to handle auth flow
   const { login, hasLoginError } = useContext(UserContext);
   const { proceed } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // Hooks for Auth
   const onSubmit = (e) => {
     e.preventDefault();
     login(username, password);
@@ -18,6 +24,7 @@ const Login = () => {
     proceed();
   };
 
+  // Handling Input Form
   const onInputChange = (setter) => (e) => {
     setter(e.target.value);
   };
@@ -58,6 +65,7 @@ const Login = () => {
 
 export default Login;
 
+// Custom Styled components
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
