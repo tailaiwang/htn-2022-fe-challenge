@@ -1,3 +1,7 @@
+// Hack the North 2022 Frontend Developer Challenge 
+// Tailai Wang
+// App Page 
+
 import React, { useReducer } from "react";
 
 import UserContext from "./contexts/userContext";
@@ -15,14 +19,16 @@ const INITIAL_STATE = {
   hasLoginError: false,
 };
 
+// Simple authentication to make sure username and password are correct
 const validateCredentials = (username, password) =>
   username === USERNAME && password === PASSWORD;
 
+// Reducer to handle auth flow
 const reducer = (state, action) => {
   switch (action.type) {
     case "login": {
       const { username, password } = action.payload;
-
+      // Incorrect Auth - displays error message
       if (!validateCredentials(username, password)) {
         return {
           ...state,
@@ -31,6 +37,7 @@ const reducer = (state, action) => {
         };
       }
 
+      // Successful Login
       return {
         ...state,
         hasLoginError: false,
@@ -48,6 +55,7 @@ const reducer = (state, action) => {
     }
 
     case "proceed": {
+      // Continute without Logging in (Guest Account)
       return {
         ...state,
         hasLoginError: false,

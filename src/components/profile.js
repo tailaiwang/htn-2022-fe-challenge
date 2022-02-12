@@ -18,6 +18,7 @@ const Profile = () => {
   const [apiResponse, setApiResponse] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // API Request, keeps private/public events based on auth status
   useEffect(() => {
     setLoading(true);
     request("https://api.hackthenorth.com/v3/graphql", sampleEventsQuery).then(
