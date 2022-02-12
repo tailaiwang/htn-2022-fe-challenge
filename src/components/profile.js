@@ -17,10 +17,23 @@ const Profile = () => {
   // Make GraphQL Query and store in state
   const [apiResponse, setApiResponse] = useState(null);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     request("https://api.hackthenorth.com/v3/graphql", sampleEventsQuery).then(
-      (data) => setApiResponse(data.sampleEvents)
+      (data) => {
+        if (user.username == "Guest") {
+          var appendValue = [];
+          data.sampleEvents.map(function (event) {
+            if (event.permission == "public") {
+              appendValue.push(event);
+            }
+          });
+          setApiResponse(appendValue);
+        } else {
+          setApiResponse(data.sampleEvents);
+        }
+      }
     );
     setTimeout(() => setLoading(false), 1000);
   }, []);
@@ -50,7 +63,11 @@ const Profile = () => {
   return (
     <Wrapper>
       <h1>Welcome {user.username}!</h1>
-      <Button onClick={logout}>Logout</Button>
+      {user.username == "Guest" ? (
+        <Button onClick={logout}>Login to View All Events</Button>
+      ) : (
+        <Button onClick={logout}>Logout</Button>
+      )}
       <span>
         <Button onClick={onStartSort}>Sort by Start Time</Button>
         <Button onClick={onIdSort}>Sort by ID</Button>
