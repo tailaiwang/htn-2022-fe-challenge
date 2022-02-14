@@ -12,6 +12,13 @@ export default function Event({ close: closeWrapper, event }) {
         {moment(event.end_time).format("h:mma")}
       </p>
       <p>{event.description}</p>
+      <span>
+        {event.related_events.map((event, index) => {
+          return (
+            <Button key={index}>{event}</Button>
+          );
+        })}
+      </span>
     </Wrapper>
   );
 }
