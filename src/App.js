@@ -5,8 +5,8 @@
 import React, { useReducer } from "react";
 
 import UserContext from "./contexts/userContext";
-import Login from "./components/login";
-import Profile from "./components/profile";
+import Login from "./components/Login";
+import Profile from "./components/Profile";
 
 import "./index.css";
 
