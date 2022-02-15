@@ -23,7 +23,9 @@ export default function Event({ close: closeWrapper, related, event }) {
       </p>
       <p>{curEvent.description}</p>
       <span>
-        Related Event(s):
+        {curEvent.related_events.length != 0 && (
+          <span>Click for Related Event(s):</span>
+        )}
         {curEvent.related_events.map((event, index) => {
           return (
             <Button

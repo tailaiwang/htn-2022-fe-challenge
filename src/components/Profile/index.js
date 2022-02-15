@@ -45,7 +45,7 @@ const Profile = () => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
-  // Hooks for Various Button Actions
+  // Hooks for Various Button
   // Sort Events by Start Time
   const onStartSort = (e) => {
     e.preventDefault();
@@ -95,16 +95,27 @@ const Profile = () => {
           />
         )}
       </EventWrapper>
-      <h1>Welcome {user.username}!</h1>
-      {user.username == "Guest" ? (
+      {loading === false ? (
+        <>
+          <h1>{user.username}&apos;s Hackathon Global Portal</h1>
+          <p>Click on cards to learn more!</p>
+        </>
+      ) : (
+        <h1>Welcome {user.username}!</h1>
+      )}
+
+      {user.username == "Guest" && loading === false ? (
         <Button onClick={logout}>Login to View All Events</Button>
       ) : (
-        <Button onClick={logout}>Logout</Button>
+        loading === false && <Button onClick={logout}>Logout</Button>
       )}
-      <span>
-        <Button onClick={onStartSort}>Sort by Start Time</Button>
-        <Button onClick={onIdSort}>Sort by ID</Button>
-      </span>
+
+      {loading === false && (
+        <span>
+          <Button onClick={onStartSort}>Sort by Start Time</Button>
+          <Button onClick={onIdSort}>Sort by ID</Button>
+        </span>
+      )}
 
       <div>
         {loading === false ? (
@@ -137,6 +148,7 @@ const Profile = () => {
               color="grey"
               ariaLabel="loading"
             />
+            <span>Loading...</span>
           </LoadingWrapper>
         )}
       </div>
