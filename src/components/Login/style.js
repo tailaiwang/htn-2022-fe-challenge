@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 
 export const Form = styled.form`
   border: 1px solid;
-  height: 50vh;
+  min-height: 50vh;
   padding: 2vw;
   display: flex;
   align-items: center;
