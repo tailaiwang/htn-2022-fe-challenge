@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/htn-2022-fe-challenge/static/css/main.e6c13ad2.css",
-    "main.js": "/htn-2022-fe-challenge/static/js/main.1442554f.js",
+    "main.js": "/htn-2022-fe-challenge/static/js/main.b87fd583.js",
     "index.html": "/htn-2022-fe-challenge/index.html",
     "main.e6c13ad2.css.map": "/htn-2022-fe-challenge/static/css/main.e6c13ad2.css.map",
-    "main.1442554f.js.map": "/htn-2022-fe-challenge/static/js/main.1442554f.js.map"
+    "main.b87fd583.js.map": "/htn-2022-fe-challenge/static/js/main.b87fd583.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.1442554f.js"
+    "static/js/main.b87fd583.js"
   ]
 }
