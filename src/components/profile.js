@@ -67,23 +67,24 @@ const Profile = () => {
   // Activate new Event Popup
   const onCardOpen = (id) => {
     let updatedValue = apiResponse[id];
-    setActiveEvent(activeEvent => updatedValue);
+    setActiveEvent((activeEvent) => updatedValue);
     setShowEvent(true);
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   };
 
   const onCardClose = () => {
-    console.log("HI");
     let updatedValue = {};
-    setActiveEvent(activeEvent => updatedValue);
+    setActiveEvent((activeEvent) => updatedValue);
     setShowEvent(false);
-    document.body.style.overflow = 'visible';
-  }
+    document.body.style.overflow = "visible";
+  };
 
   return (
     <Wrapper active={showEvent}>
       <EventWrapper active={showEvent}>
-        {showEvent && <Event event={activeEvent} close={onCardClose}/>}
+        {showEvent && (
+          <Event event={activeEvent} related={apiResponse} close={onCardClose}/>
+        )}
       </EventWrapper>
       <h1>Welcome {user.username}!</h1>
       {user.username == "Guest" ? (
@@ -153,7 +154,7 @@ const EventWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   pointer-events: none;
-  ${({ active }) => active && (`background-color: rgba(0, 0, 0, 0.6);`)}
+  ${({ active }) => active && `background-color: rgba(0, 0, 0, 0.6);`}
 `;
 
 const Wrapper = styled.div`
@@ -164,7 +165,7 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   background: linear-gradient(rgb(200, 217, 235) 0%, rgb(241, 244, 249) 60.28%);
-  ${({ active }) => active && (`pointer-events: none;`)}
+  ${({ active }) => active && `pointer-events: none;`}
 `;
 
 const Button = styled.button`

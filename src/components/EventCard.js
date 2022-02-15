@@ -1,21 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
 
-export default function Event({ close: closeWrapper, event }) {
+
+
+
+export default function Event({
+  close: closeWrapper,
+  related,
+  event,
+}) {
+
+  const [curEvent, setCurEvent] = useState(event);
+
+  const newCard = (id) => {
+    let updatedValue = related[id - 1];
+    setCurEvent((curEvent) => updatedValue);
+    console.log("Hi");
+  }
+
   return (
     <Wrapper>
-      <Button onClick= { closeWrapper }>Exit</Button>
-      <h1>{event.name}</h1>
+      <Button onClick={closeWrapper}>Exit</Button>
+      <h1>{curEvent.name}</h1>
       <p>
-        {moment(event.start_time).format("dddd, h:mma")} to{" "}
-        {moment(event.end_time).format("h:mma")}
+        {moment(curEvent.start_time).format("dddd, h:mma")} to{" "}
+        {moment(curEvent.end_time).format("h:mma")}
       </p>
-      <p>{event.description}</p>
+      <p>{curEvent.description}</p>
       <span>
-        {event.related_events.map((event, index) => {
+        Related Event(s):
+        {curEvent.related_events.map((event, index) => {
           return (
-            <Button key={index}>{event}</Button>
+            <Button onClick={() => {newCard(event)}} key={index}>
+              {event}
+            </Button>
           );
         })}
       </span>
