@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import UserContext from "../../contexts/userContext";
 import moment from "moment";
 import { Wrapper, Button } from "./style";
 
 export default function Event({ close: closeWrapper, related, event }) {
+  const { user, logout } = useContext(UserContext);
   // State Variable (Derived from props) for event info on popup
   const [curEvent, setCurEvent] = useState(event);
-
   // Update Event Info based on related events button
   const newCard = (id) => {
     let updatedValue = related[id - 1];
     setCurEvent((curEvent) => updatedValue);
-    console.log("Hi");
   };
 
   return (
@@ -27,6 +27,12 @@ export default function Event({ close: closeWrapper, related, event }) {
           <span>Click for Related Event(s):</span>
         )}
         {curEvent.related_events.map((event, index) => {
+          if (
+            related[event - 1].permission == "private" &&
+            user.username == "Guest"
+          ) {
+            return <></>;
+          }
           return (
             <Button
               onClick={() => {

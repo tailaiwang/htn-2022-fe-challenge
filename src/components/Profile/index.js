@@ -17,7 +17,7 @@ const Profile = () => {
 
   // Make GraphQL Query and store in state
   const [apiResponse, setApiResponse] = useState(null);
-
+  const [availableEvents, setAvailableEvents] = useState(null);
   // State Variables to handle showing event in popup
   const [activeEvent, setActiveEvent] = useState({});
   const [showEvent, setShowEvent] = useState(false);
@@ -36,10 +36,11 @@ const Profile = () => {
               appendValue.push(event);
             }
           });
-          setApiResponse(appendValue);
+          setAvailableEvents(appendValue);
         } else {
-          setApiResponse(data.sampleEvents);
+          setAvailableEvents(data.sampleEvents);
         }
+        setApiResponse(data.sampleEvents);
       }
     );
     setTimeout(() => setLoading(false), 1000);
@@ -49,10 +50,10 @@ const Profile = () => {
   // Sort Events by Start Time
   const onStartSort = (e) => {
     e.preventDefault();
-    let sortedAsceding = apiResponse.sort((a, b) => {
+    let sortedAsceding = availableEvents.sort((a, b) => {
       return a.start_time - b.start_time;
     });
-    setApiResponse([...sortedAsceding]);
+    setAvailableEvents([...sortedAsceding]);
     setLoading(true);
     setTimeout(() => setLoading(false), 1000);
   };
@@ -60,17 +61,17 @@ const Profile = () => {
   // Sort Events by ID
   const onIdSort = (e) => {
     e.preventDefault();
-    let sortedAsceding = apiResponse.sort((a, b) => {
+    let sortedAsceding = availableEvents.sort((a, b) => {
       return a.id - b.id;
     });
-    setApiResponse([...sortedAsceding]);
+    setAvailableEvents([...sortedAsceding]);
     setLoading(true);
     setTimeout(() => setLoading(false), 1000);
   };
 
   // Activate new Event Popup
   const onCardOpen = (id) => {
-    let updatedValue = apiResponse[id];
+    let updatedValue = availableEvents[id];
     setActiveEvent((activeEvent) => updatedValue);
     setShowEvent(true);
     document.body.style.overflow = "hidden";
@@ -120,8 +121,8 @@ const Profile = () => {
       <div>
         {loading === false ? (
           <div>
-            {apiResponse &&
-              apiResponse.map((item, index) => {
+            {availableEvents &&
+              availableEvents.map((item, index) => {
                 return (
                   <Card
                     key={index}
