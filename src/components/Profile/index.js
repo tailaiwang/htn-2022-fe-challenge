@@ -3,12 +3,12 @@
 // Profile Page
 
 import React, { useContext, useState, useEffect } from "react";
-import UserContext from "../contexts/userContext";
+import UserContext from "../../contexts/userContext";
 import { request } from "graphql-request";
-import { sampleEventsQuery } from "../utils/queries";
-import Event from "./EventCard";
+import { sampleEventsQuery } from "../../utils/queries";
+import Event from "../EventCard";
+import { Card, Button, Wrapper, EventWrapper, LoadingWrapper } from "./style";
 import moment from "moment";
-import styled from "styled-components";
 import { Audio } from "react-loader-spinner";
 
 const Profile = () => {
@@ -17,8 +17,11 @@ const Profile = () => {
 
   // Make GraphQL Query and store in state
   const [apiResponse, setApiResponse] = useState(null);
+
+  // State Variables to handle showing event in popup
   const [activeEvent, setActiveEvent] = useState({});
   const [showEvent, setShowEvent] = useState(false);
+  // State Variable to show loading animation
   const [loading, setLoading] = useState(false);
 
   // API Request, keeps private/public events based on auth status
@@ -42,6 +45,7 @@ const Profile = () => {
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
+  // Hooks for Various Button Actions
   // Sort Events by Start Time
   const onStartSort = (e) => {
     e.preventDefault();
@@ -72,6 +76,7 @@ const Profile = () => {
     document.body.style.overflow = "hidden";
   };
 
+  // Close Event Popup
   const onCardClose = () => {
     let updatedValue = {};
     setActiveEvent((activeEvent) => updatedValue);
@@ -83,7 +88,11 @@ const Profile = () => {
     <Wrapper active={showEvent}>
       <EventWrapper active={showEvent}>
         {showEvent && (
-          <Event event={activeEvent} related={apiResponse} close={onCardClose}/>
+          <Event
+            event={activeEvent}
+            related={apiResponse}
+            close={onCardClose}
+          />
         )}
       </EventWrapper>
       <h1>Welcome {user.username}!</h1>
@@ -136,57 +145,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-// Custom Styled components
-const LoadingWrapper = styled.div`
-  height: 100%;
-`;
-
-const EventWrapper = styled.div`
-  overflow-y: hidden;
-  height: 100vh;
-  width: 100vw;
-  top: 0;
-  left: 0;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  pointer-events: none;
-  ${({ active }) => active && `background-color: rgba(0, 0, 0, 0.6);`}
-`;
-
-const Wrapper = styled.div`
-  min-height: 100vh;
-  max-width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background: linear-gradient(rgb(200, 217, 235) 0%, rgb(241, 244, 249) 60.28%);
-  ${({ active }) => active && `pointer-events: none;`}
-`;
-
-const Button = styled.button`
-  margin: 2px;
-  padding: 4px;
-  border-radius: 20px;
-  color: white;
-  background-color: rgba(10, 68, 109);
-`;
-
-const Card = styled.div`
-  width: 70vw;
-  background-color: white;
-  font-family: "Helvetica";
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 10px;
-  padding: 10px;
-  text-align: center;
-  border: 2px solid;
-`;

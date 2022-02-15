@@ -1,6 +1,6 @@
-// Hack the North 2022 Frontend Developer Challenge 
+// Hack the North 2022 Frontend Developer Challenge
 // Tailai Wang
-// App Page 
+// App Page
 
 import React, { useReducer } from "react";
 
