@@ -1,10 +1,10 @@
-// Hack the North 2022 Frontend Developer Challenge 
+// Hack the North 2022 Frontend Developer Challenge
 // Tailai Wang
-// Login Page 
+// Login Page
 
 import React, { useState, useContext } from "react";
-import UserContext from "../contexts/userContext";
-import styled from "styled-components";
+import UserContext from "../../contexts/userContext";
+import { Error, Header, Button, FieldSet, Form, Wrapper } from "./style";
 
 const Login = () => {
   // Context to handle auth flow
@@ -13,7 +13,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // Hooks for Auth
+  // Hooks for Auth - Login Attempt and Continue without Logging in
   const onSubmit = (e) => {
     e.preventDefault();
     login(username, password);
@@ -64,56 +64,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// Custom Styled components
-const Wrapper = styled.div`
-  max-width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background: linear-gradient(rgb(200, 217, 235) 0%, rgb(241, 244, 249) 60.28%);
-`;
-const Form = styled.form`
-  border: 1px solid;
-  height: 50vh;
-  padding: 2vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: white;
-  font-family: "Helvetica";
-  color: rgba(10, 68, 109);
-  border-radius: 20px;
-`;
-
-const FieldSet = styled.fieldset`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  padding: 2vw;
-  width: 50%;
-  height: 15%;
-  border-radius: 20px;
-  margin: 1vw;
-`;
-
-const Button = styled.button`
-  margin: 2px;
-  padding: 4px;
-  border-radius: 20px;
-  color: white;
-  background-color: rgba(10, 68, 109);
-`;
-
-const Header = styled.h1`
-  text-align: center;
-`;
-
-const Error = styled.div`
-  color: red;
-`;
