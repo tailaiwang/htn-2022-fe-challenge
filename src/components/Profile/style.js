@@ -13,6 +13,7 @@ export const EventWrapper = styled.div`
   left: 0;
   position: fixed;
   display: flex;
+  text-align: center;
   align-items: center;
   justify-content: center;
   flex-direction: column;
