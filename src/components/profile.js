@@ -6,6 +6,7 @@ import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../contexts/userContext";
 import { request } from "graphql-request";
 import { sampleEventsQuery } from "../utils/queries";
+import Event from "./EventCard";
 import moment from "moment";
 import styled from "styled-components";
 import { Audio } from "react-loader-spinner";
@@ -16,8 +17,11 @@ const Profile = () => {
 
   // Make GraphQL Query and store in state
   const [apiResponse, setApiResponse] = useState(null);
+  const [activeEvent, setActiveEvent] = useState({});
+  const [showEvent, setShowEvent] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // API Request, keeps private/public events based on auth status
   useEffect(() => {
     setLoading(true);
     request("https://api.hackthenorth.com/v3/graphql", sampleEventsQuery).then(
@@ -60,8 +64,27 @@ const Profile = () => {
     setTimeout(() => setLoading(false), 1000);
   };
 
+  // Activate new Event Popup
+  const onCardOpen = (id) => {
+    let updatedValue = apiResponse[id];
+    setActiveEvent(activeEvent => updatedValue);
+    setShowEvent(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const onCardClose = () => {
+    console.log("HI");
+    let updatedValue = {};
+    setActiveEvent(activeEvent => updatedValue);
+    setShowEvent(false);
+    document.body.style.overflow = 'visible';
+  }
+
   return (
-    <Wrapper>
+    <Wrapper active={showEvent}>
+      <EventWrapper active={showEvent}>
+        {showEvent && <Event event={activeEvent} close={onCardClose}/>}
+      </EventWrapper>
       <h1>Welcome {user.username}!</h1>
       {user.username == "Guest" ? (
         <Button onClick={logout}>Login to View All Events</Button>
@@ -79,7 +102,12 @@ const Profile = () => {
             {apiResponse &&
               apiResponse.map((item, index) => {
                 return (
-                  <Card key={index}>
+                  <Card
+                    key={index}
+                    onClick={() => {
+                      onCardOpen(index);
+                    }}
+                  >
                     <h1>{item.name}</h1>
                     <p>
                       {moment(item.start_time).format("dddd, h:mma")} to{" "}
@@ -113,6 +141,21 @@ const LoadingWrapper = styled.div`
   height: 100%;
 `;
 
+const EventWrapper = styled.div`
+  overflow-y: hidden;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  pointer-events: none;
+  ${({ active }) => active && (`background-color: rgba(0, 0, 0, 0.6);`)}
+`;
+
 const Wrapper = styled.div`
   min-height: 100vh;
   max-width: 100vw;
@@ -121,6 +164,7 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   background: linear-gradient(rgb(200, 217, 235) 0%, rgb(241, 244, 249) 60.28%);
+  ${({ active }) => active && (`pointer-events: none;`)}
 `;
 
 const Button = styled.button`
