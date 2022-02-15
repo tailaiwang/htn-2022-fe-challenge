@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/htn-2022-fe-challenge/static/css/main.e6c13ad2.css",
+    "main.js": "/htn-2022-fe-challenge/static/js/main.1442554f.js",
+    "index.html": "/htn-2022-fe-challenge/index.html",
+    "main.e6c13ad2.css.map": "/htn-2022-fe-challenge/static/css/main.e6c13ad2.css.map",
+    "main.1442554f.js.map": "/htn-2022-fe-challenge/static/js/main.1442554f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.1442554f.js"
+  ]
+}
