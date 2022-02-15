@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const LoadingWrapper = styled.div`
   height: 100%;
+  text-align: center;
 `;
 
 export const EventWrapper = styled.div`
