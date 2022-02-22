@@ -1,9 +1,9 @@
 # htn-2022-fe-challenge
 Hack the North 2022 Frontend Developer Challenge
 
-Deployed at http://tailaiwang.me/htn-2022-fe-challenge/
+~~Deployed at http://tailaiwang.me/htn-2022-fe-challenge/~~ (taken down)
 
-Write-up in PDF in this repo, also on [drive](https://drive.google.com/file/d/1_YnkgIfCM4aPbez3zXmWO3VZaWTyluaS/view?usp=sharing)
+Write-up in PDF in this repo, also on ~~[drive](https://drive.google.com/file/d/1_YnkgIfCM4aPbez3zXmWO3VZaWTyluaS/view?usp=sharing)~~ (taken down)
 
 --- 
 ### Resources Used
